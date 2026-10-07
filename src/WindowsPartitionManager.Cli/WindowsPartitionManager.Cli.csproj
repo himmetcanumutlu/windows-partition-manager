@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <AssemblyName>wpm</AssemblyName>
+    <RootNamespace>WindowsPartitionManager.Cli</RootNamespace>
+    <AssemblyTitle>Windows Partition Manager command line (wpm)</AssemblyTitle>
+    <ApplicationIcon>../../assets/app.ico</ApplicationIcon>
+    <Description>Command-line interface of Windows Partition Manager.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsPartitionManager.Core\WindowsPartitionManager.Core.csproj" />
+    <ProjectReference Include="..\WindowsPartitionManager.Platform.Windows\WindowsPartitionManager.Platform.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

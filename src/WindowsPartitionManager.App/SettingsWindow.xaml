@@ -1,0 +1,52 @@
+<Window x:Class="WindowsPartitionManager.App.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:WindowsPartitionManager.App.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel}"
+        Title="Settings" Height="380" Width="560" MinHeight="320" MinWidth="480"
+        Background="{StaticResource WindowBackground}"
+        FontFamily="Segoe UI" FontSize="13"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Settings" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12" />
+
+        <GroupBox Grid.Row="1" Header="Operation log" Padding="10,8" Margin="0,0,0,10" BorderBrush="{StaticResource CardBorder}" Background="{StaticResource CardBackground}">
+            <StackPanel>
+                <TextBlock Text="Every change the program asks Windows to make is recorded here, with its outcome." TextWrapping="Wrap" Style="{StaticResource Secondary}" />
+                <TextBox Text="{Binding LogPath, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" Background="Transparent" Margin="0,6,0,6" FontFamily="Cascadia Mono, Consolas" FontSize="12" />
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Open log" Command="{Binding OpenLogCommand}" Margin="0,0,8,0" />
+                    <Button Content="Open folder" Command="{Binding OpenLogFolderCommand}" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="2" Header="Unblock wizard" Padding="10,8" Margin="0,0,0,10" BorderBrush="{StaticResource CardBorder}" Background="{StaticResource CardBackground}">
+            <StackPanel>
+                <TextBlock Text="{Binding RestoreText}" TextWrapping="Wrap" />
+                <TextBlock Text="{Binding RestoreStatus}" TextWrapping="Wrap" Style="{StaticResource Secondary}" Margin="0,4,0,6" />
+                <Button Content="Restore previous settings" Command="{Binding RestoreCommand}" HorizontalAlignment="Left" />
+            </StackPanel>
+        </GroupBox>
+
+        <TextBlock Grid.Row="3" Style="{StaticResource Secondary}" TextWrapping="Wrap" VerticalAlignment="Bottom">
+            <Run Text="Windows Partition Manager" FontWeight="SemiBold" />
+            <Run Text=" version " /><Run Text="{Binding Version, Mode=OneWay}" />
+            <LineBreak />
+            <Run Text="Open source under the MIT license. Every disk change goes through the Windows Storage Management API; no raw sectors are ever written." />
+        </TextBlock>
+
+        <Button Grid.Row="4" Content="Close" Click="Close_Click" HorizontalAlignment="Right" Margin="0,12,0,0" />
+    </Grid>
+</Window>

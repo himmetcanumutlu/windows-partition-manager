@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/WindowsPartitionManager.App/WindowsPartitionManager.App.csproj" />
+    <Project Path="src/WindowsPartitionManager.Cli/WindowsPartitionManager.Cli.csproj" />
+    <Project Path="src/WindowsPartitionManager.Core/WindowsPartitionManager.Core.csproj" />
+    <Project Path="src/WindowsPartitionManager.Platform.Windows/WindowsPartitionManager.Platform.Windows.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WindowsPartitionManager.Core.Tests/WindowsPartitionManager.Core.Tests.csproj" />
+    <Project Path="tests/WindowsPartitionManager.Integration.Tests/WindowsPartitionManager.Integration.Tests.csproj" />
+  </Folder>
+</Solution>

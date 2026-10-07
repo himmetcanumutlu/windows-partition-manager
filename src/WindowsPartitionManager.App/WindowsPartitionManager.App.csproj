@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>WindowsPartitionManager</AssemblyName>
+    <AssemblyTitle>Windows Partition Manager</AssemblyTitle>
+    <ApplicationIcon>../../assets/app.ico</ApplicationIcon>
+    <Description>Shrink, create and manage disk partitions safely.</Description>
+    <!-- Normal builds demand administrator rights; -p:DevManifest=true builds an unelevated binary for read-only testing. -->
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationManifest Condition="'$(DevManifest)' == 'true'">app.dev.manifest</ApplicationManifest>
+    <!-- Separate output so the unelevated dev build never overwrites (or is skipped in favour of) the real one. -->
+    <OutDir Condition="'$(DevManifest)' == 'true'">bin\$(Configuration)\dev\</OutDir>
+    <IntermediateOutputPath Condition="'$(DevManifest)' == 'true'">obj\$(Configuration)\dev\</IntermediateOutputPath>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsPartitionManager.Core\WindowsPartitionManager.Core.csproj" />
+    <ProjectReference Include="..\WindowsPartitionManager.Platform.Windows\WindowsPartitionManager.Platform.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

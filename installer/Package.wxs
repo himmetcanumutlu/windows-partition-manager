@@ -1,0 +1,104 @@
+<!--
+  Windows Installer (MSI) package for Windows Partition Manager, built with WiX Toolset 5.
+  Build it with build/package.ps1, which publishes the binaries first and passes:
+    -d Version=<x.y.z>      product version
+    -d PublishDir=<folder>  self-contained publish output of the app and the CLI
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+  <!-- The UpgradeCode identifies the product across versions. Never change it. -->
+  <Package Name="Windows Partition Manager"
+           Manufacturer="Windows Partition Manager contributors"
+           Version="$(var.Version)"
+           UpgradeCode="627CB77B-4EE0-406B-A7B5-B6E857B5E7CD"
+           Scope="perMachine"
+           Language="1033"
+           Compressed="yes">
+
+    <SummaryInformation Description="Windows Partition Manager $(var.Version) installer"
+                        Manufacturer="Windows Partition Manager contributors" />
+
+    <!-- Installing a newer version replaces the old one; installing an older one is refused. -->
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
+
+    <!-- Entry in Settings > Apps / Programs and Features. -->
+    <Icon Id="AppIcon" SourceFile="..\assets\app.ico" />
+    <Property Id="ARPPRODUCTICON" Value="AppIcon" />
+    <Property Id="ARPCOMMENTS" Value="Shrink, create and manage disk partitions safely. Open source under the MIT license." />
+    <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLFOLDER]" After="CostFinalize" />
+
+    <!-- Wizard: welcome, license (MIT), install folder, progress, finish. -->
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+    <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+
+    <!-- "Launch Windows Partition Manager" on the last page, ticked by default. The app asks for
+         administrator approval itself, so it is started through the shell like a double-click. -->
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Windows Partition Manager" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+    <CustomAction Id="LaunchApplication" BinaryRef="Wix4UtilCA_X64" DllEntry="WixShellExec" Impersonate="yes" />
+    <UI>
+      <!-- The target is resolved when Finish is clicked, so a folder changed in the wizard is honoured. -->
+      <Publish Dialog="ExitDialog" Control="Finish" Property="WixShellExecTarget" Value="[INSTALLFOLDER]WindowsPartitionManager.exe" Order="1"
+               Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed" />
+      <Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication" Order="2"
+               Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed" />
+    </UI>
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Windows Partition Manager" />
+    </StandardDirectory>
+
+    <Feature Id="Main" Title="Windows Partition Manager" Level="1">
+      <ComponentGroupRef Id="ApplicationFiles" />
+      <ComponentRef Id="StartMenuShortcut" />
+      <ComponentRef Id="DesktopShortcut" />
+      <ComponentRef Id="CommandLineOnPath" />
+    </Feature>
+  </Package>
+
+  <Fragment>
+    <!-- Everything the publish step produced: both executables and the private .NET runtime. -->
+    <ComponentGroup Id="ApplicationFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.PublishDir)\**" />
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Component Id="StartMenuShortcut" Guid="*">
+        <Shortcut Id="AppShortcut"
+                  Name="Windows Partition Manager"
+                  Description="Shrink, create and manage disk partitions safely"
+                  Target="[INSTALLFOLDER]WindowsPartitionManager.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="AppIcon" />
+        <RegistryValue Root="HKLM" Key="Software\Windows Partition Manager" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+  </Fragment>
+
+  <Fragment>
+    <!-- Per-machine install: this is the public desktop, so every user sees the shortcut. -->
+    <StandardDirectory Id="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="*">
+        <Shortcut Id="DesktopAppShortcut"
+                  Name="Windows Partition Manager"
+                  Description="Shrink, create and manage disk partitions safely"
+                  Target="[INSTALLFOLDER]WindowsPartitionManager.exe"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="AppIcon" />
+        <RegistryValue Root="HKLM" Key="Software\Windows Partition Manager" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+  </Fragment>
+
+  <Fragment>
+    <!-- Puts "wpm" on the system PATH; removed again on uninstall. -->
+    <Component Id="CommandLineOnPath" Directory="INSTALLFOLDER" Guid="*">
+      <Environment Id="PathEntry" Name="PATH" Value="[INSTALLFOLDER]" Part="last" Action="set" System="yes" Permanent="no" />
+      <RegistryValue Root="HKLM" Key="Software\Windows Partition Manager" Name="InstallFolder" Type="string" Value="[INSTALLFOLDER]" KeyPath="yes" />
+    </Component>
+  </Fragment>
+</Wix>

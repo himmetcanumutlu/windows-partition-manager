@@ -1,0 +1,19 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Deterministic>true</Deterministic>
+    <Authors>Windows Partition Manager contributors</Authors>
+    <Product>Windows Partition Manager</Product>
+    <Company>Windows Partition Manager contributors</Company>
+    <Copyright>Copyright (c) 2026 Windows Partition Manager contributors</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Version>0.1.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>

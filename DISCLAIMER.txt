@@ -1,0 +1,31 @@
+Windows Partition Manager - Disclaimer of warranty and limitation of liability
+
+In short: the program is careful, but changing partitions always carries some risk.
+Back up your data first. The authors cannot take responsibility for your data.
+
+1. Windows Partition Manager is free, open-source software, provided "as is" and "as
+   available", without warranty of any kind, express or implied, including but not limited to
+   the warranties of merchantability, fitness for a particular purpose and non-infringement.
+
+2. Changing partitions is never completely free of risk. Hardware faults, power failures,
+   other software, or choosing the wrong partition can lead to loss of data. The program checks
+   every change before it is made and uses only the disk functions built into Windows, but it
+   cannot rule these risks out.
+
+3. You use the program at your own risk. You are responsible for backing up your data before
+   creating, resizing, formatting or deleting partitions, and for checking that each change is
+   the one you intend.
+
+4. To the maximum extent permitted by applicable law, the authors and contributors of
+   Windows Partition Manager shall not be liable for any loss or corruption of data, damage to
+   hardware or software, loss of time, loss of profit, or any other direct, indirect,
+   incidental, special or consequential damage arising from the use of, or the inability to use,
+   the program, even if advised of the possibility of such damage. No claim of any kind is
+   accepted against the authors or contributors on these grounds.
+
+5. Nothing in this notice limits any liability that cannot be limited or excluded under the
+   law that applies to you.
+
+By installing, copying or using Windows Partition Manager you confirm that you have read,
+understood and accepted these terms and the MIT license that accompanies the program. If you do
+not accept them, do not install or use the program.

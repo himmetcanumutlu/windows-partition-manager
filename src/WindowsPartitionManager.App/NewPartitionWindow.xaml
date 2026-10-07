@@ -1,0 +1,101 @@
+<Window x:Class="WindowsPartitionManager.App.NewPartitionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:WindowsPartitionManager.App.Controls"
+        xmlns:vm="clr-namespace:WindowsPartitionManager.App.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:NewPartitionViewModel}"
+        Title="{Binding Title}" Height="560" Width="620" MinHeight="480" MinWidth="520"
+        Background="{StaticResource WindowBackground}"
+        FontFamily="Segoe UI" FontSize="13"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="18" FontWeight="SemiBold" />
+        <TextBlock Grid.Row="1" Text="{Binding RegionText}" Style="{StaticResource Secondary}" TextWrapping="Wrap" Margin="0,2,0,14" />
+
+        <Border Grid.Row="2" Background="{StaticResource CardBackground}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14" IsEnabled="{Binding IsFormEnabled}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Size" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SizeText, UpdateSourceTrigger=PropertyChanged}" Padding="6,4" Margin="0,0,8,8" VerticalContentAlignment="Center" />
+                <Button Grid.Row="0" Grid.Column="2" Content="Use all" Command="{Binding UseAllCommand}" Margin="0,0,0,8" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="File system" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding FileSystems}" SelectedItem="{Binding FileSystem}" Padding="6,4" Margin="0,0,0,8" />
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Label" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}" Padding="6,4" Margin="0,0,0,8" VerticalContentAlignment="Center" MaxLength="32" />
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Drive letter" VerticalAlignment="Center" Margin="0,0,0,8" />
+                <ComboBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Letters}" SelectedItem="{Binding SelectedLetter}" Padding="6,4" Margin="0,0,0,8" />
+
+                <CheckBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Content="Quick format (recommended)" IsChecked="{Binding QuickFormat}" />
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" Margin="0,12,0,0">
+            <StackPanel>
+                <TextBlock Text="{Binding Summary}" TextWrapping="Wrap" Margin="0,0,0,8" />
+                <ItemsControl ItemsSource="{Binding Issues}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock TextWrapping="Wrap" Margin="0,0,0,4">
+                                <Run Text="{Binding Severity, Mode=OneWay}" FontWeight="SemiBold" />
+                                <Run Text=" " />
+                                <Run Text="{Binding Message, Mode=OneWay}" />
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#8A6D00" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsError}" Value="True">
+                                                <Setter Property="Foreground" Value="#A4262C" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Border Background="#FDECEA" BorderBrush="#F5C2C0" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,8,0,0"
+                        Visibility="{Binding HasError, Converter={x:Static controls:Converters.BoolToVisibility}}">
+                    <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="#A4262C" />
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="4" Margin="0,8,0,0">
+            <TextBlock Text="{Binding Status}" Style="{StaticResource Secondary}" TextWrapping="Wrap" />
+            <ProgressBar Height="6" Margin="0,6,0,0" IsIndeterminate="True"
+                         Visibility="{Binding IsBusy, Converter={x:Static controls:Converters.BoolToVisibility}}" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Close" Click="Close_Click" Margin="0,0,8,0" />
+            <Button Content="Create partition" Command="{Binding CreateCommand}" IsDefault="True" FontWeight="SemiBold" />
+        </StackPanel>
+    </Grid>
+</Window>
