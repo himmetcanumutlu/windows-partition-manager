@@ -186,10 +186,23 @@ available width would make a content-sized window as wide as the screen.
 | `DestructiveActionWindow` | Delete and format; the button only enables after the partition name is typed. |
 | `ShrinkAnalysisWindow` | Runs the analysis with progress and cancellation; opens the unblock wizard. |
 | `UnblockWindow` | Lists the unblock steps with their consequences; applies and restores. |
-| `SettingsWindow` | Operation log location, pending restore, version. |
+| `SettingsWindow` | Theme (White / Dark / Night) and UI font, operation log location, pending restore, version. |
 
 After every write attempt, successful or not, the dialog raises `AttemptFinished` and the main
 window refreshes from Windows.
+
+**Theming.** Fourteen brushes — `WindowBackground`, `CardBackground`, `CardBorder`,
+`TextPrimary`, `TextSecondary`, `Accent`, `ButtonHoverBackground`, `Danger`, `Warning`,
+`HeaderBackground`, `RowHoverBackground`, `RowSelectedBackground`, `ErrorBackground` and
+`ErrorBorder` — plus the `UiFontFamily` font are referenced with `DynamicResource`, so they update
+without a restart. Three `ResourceDictionary` files under `Themes/` define the same brush keys for
+**White**, **Dark** and **Night**; `ThemeManager` swaps the dictionary in
+`Application.Current.Resources.MergedDictionaries`, while the font is a single `UiFontFamily`
+resource. `SettingsStore` reads and writes
+`%LOCALAPPDATA%\WindowsPartitionManager\settings.json` (atomically, temp file then replace),
+falling back to White + Segoe UI when the file is missing or malformed. The choice applies
+immediately and is applied on startup. `PartitionColors` (the disk map / table swatch palette) and
+the toolbar action-glyph / status-indicator colours are deliberately untouched by themes.
 
 **Developer aid.** `--screenshot file.png [--size 1020x700]` loads the disks, renders the main
 window to PNG and exits; it is used to check the layout without a human (1020 px is the minimum
@@ -272,6 +285,7 @@ All under `%LOCALAPPDATA%\WindowsPartitionManager\`:
 |---|---|
 | `operations.log` | One line per write attempt: time, operation, parameters, outcome. Written through to disk. |
 | `unblock-state.json` | What the unblock wizard changed, until it is restored. |
+| `settings.json` | The selected theme and UI font. |
 | `test-trace.log` | Integration tests only: a write-through breadcrumb per step, for diagnosing crashes. |
 
 ## Testing

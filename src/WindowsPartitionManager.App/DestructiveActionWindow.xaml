@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:DestructiveActionViewModel}"
         Title="{Binding Title}" Height="560" Width="620" MinHeight="460" MinWidth="520"
-        Background="{StaticResource WindowBackground}"
-        FontFamily="Segoe UI" FontSize="13"
+        Background="{DynamicResource WindowBackground}"
+        FontFamily="{DynamicResource UiFontFamily}" FontSize="13"
         WindowStartupLocation="CenterOwner">
     <Grid Margin="16">
         <Grid.RowDefinitions>
@@ -27,7 +27,7 @@
         <TextBlock Grid.Row="1" Text="{Binding InfoText}" Style="{StaticResource Secondary}" TextWrapping="Wrap" Margin="0,2,0,8" />
         <TextBlock Grid.Row="2" Text="{Binding Explanation}" TextWrapping="Wrap" Margin="0,0,0,12" />
 
-        <Border Grid.Row="3" Background="{StaticResource CardBackground}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14"
+        <Border Grid.Row="3" Background="{DynamicResource CardBackground}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14"
                 IsEnabled="{Binding IsFormEnabled}"
                 Visibility="{Binding IsFormat, Converter={x:Static controls:Converters.BoolToVisibility}}">
             <Grid>
@@ -47,7 +47,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Label" VerticalAlignment="Center" Margin="0,0,0,8" />
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}" Padding="6,4" Margin="0,0,0,8" VerticalContentAlignment="Center" MaxLength="32" />
 
-                <CheckBox Grid.Row="2" Grid.Column="1" Content="Quick format (recommended)" IsChecked="{Binding QuickFormat}" />
+                <CheckBox Grid.Row="2" Grid.Column="1" Content="Quick format (recommended)" Foreground="{DynamicResource TextPrimary}" IsChecked="{Binding QuickFormat}" />
             </Grid>
         </Border>
 
@@ -62,10 +62,10 @@
                                 <Run Text="{Binding Message, Mode=OneWay}" />
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="#8A6D00" />
+                                        <Setter Property="Foreground" Value="{DynamicResource Warning}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsError}" Value="True">
-                                                <Setter Property="Foreground" Value="#A4262C" />
+                                                <Setter Property="Foreground" Value="{DynamicResource Danger}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -74,9 +74,9 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Border Background="#FDECEA" BorderBrush="#F5C2C0" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,8,0,0"
+                <Border Background="{DynamicResource ErrorBackground}" BorderBrush="{DynamicResource ErrorBorder}" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,8,0,0"
                         Visibility="{Binding HasError, Converter={x:Static controls:Converters.BoolToVisibility}}">
-                    <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="#A4262C" />
+                    <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="{DynamicResource Danger}" />
                 </Border>
             </StackPanel>
         </ScrollViewer>
@@ -94,7 +94,7 @@
 
         <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
             <Button Content="Close" Click="Close_Click" Margin="0,0,8,0" />
-            <Button Content="{Binding ActionText}" Command="{Binding ExecuteCommand}" FontWeight="SemiBold" Foreground="#A4262C" />
+            <Button Content="{Binding ActionText}" Command="{Binding ExecuteCommand}" FontWeight="SemiBold" Foreground="{DynamicResource Danger}" />
         </StackPanel>
     </Grid>
 </Window>

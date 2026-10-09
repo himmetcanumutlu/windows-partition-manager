@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using WindowsPartitionManager.App.Theming;
 using WindowsPartitionManager.App.ViewModels;
 using WindowsPartitionManager.Platform.Windows;
 
@@ -16,6 +17,10 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        var settings = SettingsStore.Load();
+        ThemeManager.ApplyTheme(settings.Theme);
+        ThemeManager.ApplyFont(settings.Font);
 
         var storage = new WmiStorageProvider();
         MainWindow? window = null;

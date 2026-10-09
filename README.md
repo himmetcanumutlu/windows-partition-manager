@@ -151,6 +151,14 @@ please open an issue; false positives can be reported to Microsoft at
 
 Select a row and use the toolbar, or use the row's **Actions** menu (also on right-click).
 
+### Appearance
+
+The **Settings** window lets you pick one of three colour themes — **White** (light), **Dark**
+and **Night** (blue) — and a UI font (Segoe UI, Arial, Calibri, Consolas or Times New Roman).
+Changing either takes effect immediately and is remembered on the next launch. Log and analysis
+output stay in a monospace font; the partition colours in the disk map and table are not changed
+by the theme.
+
 ### Typical use: a new drive from the free space of C:
 
 1. Select C: and press **Analyze**. If Windows' limit is far above your data, the report names
