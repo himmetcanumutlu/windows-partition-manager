@@ -3,8 +3,8 @@
     <SolidColorBrush x:Key="WindowBackground" Color="#1E1E1E" />
     <SolidColorBrush x:Key="CardBackground" Color="#2B2B2B" />
     <SolidColorBrush x:Key="CardBorder" Color="#3F3F3F" />
-    <SolidColorBrush x:Key="TextPrimary" Color="#F0F0F0" />
-    <SolidColorBrush x:Key="TextSecondary" Color="#B0B0B0" />
+    <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="TextSecondary" Color="#DCDCDC" />
     <SolidColorBrush x:Key="Accent" Color="#4CC2FF" />
     <SolidColorBrush x:Key="ButtonHoverBackground" Color="#383838" />
     <SolidColorBrush x:Key="Danger" Color="#F1707B" />
