@@ -15,6 +15,20 @@
             <Setter Property="Foreground" Value="{DynamicResource TextSecondary}" />
         </Style>
 
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+            <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimary}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource Accent}" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+            <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
+        </Style>
+
         <Style TargetType="Button">
             <Setter Property="Padding" Value="14,6" />
             <Setter Property="MinHeight" Value="32" />
