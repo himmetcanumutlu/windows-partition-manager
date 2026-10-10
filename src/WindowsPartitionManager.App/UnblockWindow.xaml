@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:UnblockViewModel}"
         Title="{Binding Title}" Height="600" Width="680" MinHeight="420" MinWidth="560"
-        Background="{StaticResource WindowBackground}"
-        FontFamily="Segoe UI" FontSize="13"
+        Background="{DynamicResource WindowBackground}"
+        FontFamily="{DynamicResource UiFontFamily}" FontSize="13"
         WindowStartupLocation="CenterOwner">
     <Grid Margin="16">
         <Grid.RowDefinitions>
@@ -28,9 +28,9 @@
             <ItemsControl ItemsSource="{Binding Steps}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:UnblockStepViewModel}">
-                        <Border Background="{StaticResource CardBackground}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14,12" Margin="0,0,0,10">
+                        <Border Background="{DynamicResource CardBackground}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14,12" Margin="0,0,0,10">
                             <StackPanel>
-                                <CheckBox IsChecked="{Binding IsSelected}" FontSize="14" FontWeight="SemiBold" Content="{Binding Title}" />
+                                <CheckBox IsChecked="{Binding IsSelected}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" Content="{Binding Title}" />
                                 <TextBlock Text="{Binding Details}" Style="{StaticResource Secondary}" Margin="24,2,0,6" />
                                 <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="24,0,0,6" />
                                 <TextBlock Text="{Binding FilesText}" Style="{StaticResource Secondary}" FontFamily="Cascadia Mono, Consolas" FontSize="11" Margin="24,0,0,0" />
@@ -41,9 +41,9 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <Border Grid.Row="3" Background="#FDECEA" BorderBrush="#F5C2C0" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,4,0,0"
+        <Border Grid.Row="3" Background="{DynamicResource ErrorBackground}" BorderBrush="{DynamicResource ErrorBorder}" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,4,0,0"
                 Visibility="{Binding HasError, Converter={x:Static controls:Converters.BoolToVisibility}}">
-            <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="#A4262C" />
+            <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="{DynamicResource Danger}" />
         </Border>
 
         <StackPanel Grid.Row="4" Margin="0,8,0,0">

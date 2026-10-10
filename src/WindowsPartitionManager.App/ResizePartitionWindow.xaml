@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:ResizePartitionViewModel}"
         Title="{Binding Title}" Height="520" Width="640" MinHeight="440" MinWidth="540"
-        Background="{StaticResource WindowBackground}"
-        FontFamily="Segoe UI" FontSize="13"
+        Background="{DynamicResource WindowBackground}"
+        FontFamily="{DynamicResource UiFontFamily}" FontSize="13"
         WindowStartupLocation="CenterOwner">
     <Grid Margin="16">
         <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
         <TextBlock Grid.Row="1" Text="{Binding InfoText}" Style="{StaticResource Secondary}" TextWrapping="Wrap" Margin="0,2,0,4" />
         <TextBlock Grid.Row="2" Text="{Binding LimitsText}" Style="{StaticResource Secondary}" TextWrapping="Wrap" Margin="0,0,0,14" />
 
-        <Border Grid.Row="3" Background="{StaticResource CardBackground}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14" IsEnabled="{Binding IsFormEnabled}">
+        <Border Grid.Row="3" Background="{DynamicResource CardBackground}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" CornerRadius="6" Padding="14" IsEnabled="{Binding IsFormEnabled}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120" />
@@ -54,10 +54,10 @@
                                 <Run Text="{Binding Message, Mode=OneWay}" />
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="#8A6D00" />
+                                        <Setter Property="Foreground" Value="{DynamicResource Warning}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsError}" Value="True">
-                                                <Setter Property="Foreground" Value="#A4262C" />
+                                                <Setter Property="Foreground" Value="{DynamicResource Danger}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -66,9 +66,9 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Border Background="#FDECEA" BorderBrush="#F5C2C0" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,8,0,0"
+                <Border Background="{DynamicResource ErrorBackground}" BorderBrush="{DynamicResource ErrorBorder}" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,8,0,0"
                         Visibility="{Binding HasError, Converter={x:Static controls:Converters.BoolToVisibility}}">
-                    <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="#A4262C" />
+                    <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="{DynamicResource Danger}" />
                 </Border>
             </StackPanel>
         </ScrollViewer>

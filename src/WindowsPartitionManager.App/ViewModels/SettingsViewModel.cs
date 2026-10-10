@@ -2,15 +2,19 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using WindowsPartitionManager.App.Theming;
 using WindowsPartitionManager.Core.Abstractions;
 using WindowsPartitionManager.Core.Operations;
 
 namespace WindowsPartitionManager.App.ViewModels;
 
-/// <summary>Not much to configure yet: where the logs are, what can be restored, which version this is.</summary>
+/// <summary>Log locations, pending restores, version, and the appearance settings (theme and UI font).</summary>
 public sealed class SettingsViewModel : INotifyPropertyChanged
 {
     private string _restoreStatus = string.Empty;
+    private string _selectedTheme;
+    private string _selectedFont;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -23,6 +27,10 @@ public sealed class SettingsViewModel : INotifyPropertyChanged
         StatePath = statePath;
         _unblock = unblock;
         _confirm = confirm;
+
+        var current = SettingsStore.Load();
+        _selectedTheme = current.Theme;
+        _selectedFont = current.Font;
 
         OpenLogCommand = new RelayCommand(() => Open(LogPath), () => File.Exists(LogPath));
         OpenLogFolderCommand = new RelayCommand(() => Open(Path.GetDirectoryName(LogPath)!), () => Directory.Exists(Path.GetDirectoryName(LogPath)));
@@ -41,6 +49,36 @@ public sealed class SettingsViewModel : INotifyPropertyChanged
     public string LogPath { get; }
 
     public string StatePath { get; }
+
+    public static IReadOnlyList<string> AvailableThemes => SettingsStore.AvailableThemes;
+
+    public static IReadOnlyList<string> AvailableFonts => SettingsStore.AvailableFonts;
+
+    public string SelectedTheme
+    {
+        get => _selectedTheme;
+        set
+        {
+            if (SetField(ref _selectedTheme, value))
+            {
+                ThemeManager.ApplyTheme(value);
+                SettingsStore.Save(new AppSettings(SelectedTheme, SelectedFont));
+            }
+        }
+    }
+
+    public string SelectedFont
+    {
+        get => _selectedFont;
+        set
+        {
+            if (SetField(ref _selectedFont, value))
+            {
+                ThemeManager.ApplyFont(value);
+                SettingsStore.Save(new AppSettings(SelectedTheme, SelectedFont));
+            }
+        }
+    }
 
     public bool HasPendingRestore => _unblock.LoadState() is { HasSomethingToRestore: true };
 
@@ -98,5 +136,17 @@ public sealed class SettingsViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RestoreText)));
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasPendingRestore)));
         Changed?.Invoke(this, EventArgs.Empty);
+    }
+
+    private bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value))
+        {
+            return false;
+        }
+
+        field = value;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        return true;
     }
 }

@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=vm:ShrinkAnalysisViewModel}"
         Title="{Binding Title}" Height="640" Width="900" MinHeight="400" MinWidth="600"
-        Background="{StaticResource WindowBackground}"
-        FontFamily="Segoe UI" FontSize="13"
+        Background="{DynamicResource WindowBackground}"
+        FontFamily="{DynamicResource UiFontFamily}" FontSize="13"
         WindowStartupLocation="CenterOwner">
     <Grid Margin="16">
         <Grid.RowDefinitions>
@@ -34,9 +34,9 @@
         </DockPanel>
 
         <StackPanel Grid.Row="3" Margin="0,0,0,10">
-            <Border Background="#FDECEA" BorderBrush="#F5C2C0" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,0,0,8"
+            <Border Background="{DynamicResource ErrorBackground}" BorderBrush="{DynamicResource ErrorBorder}" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,0,0,8"
                     Visibility="{Binding HasError, Converter={x:Static controls:Converters.BoolToVisibility}}">
-                <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="#A4262C" />
+                <TextBlock Text="{Binding Error}" TextWrapping="Wrap" Foreground="{DynamicResource Danger}" />
             </Border>
             <DockPanel>
                 <TextBlock DockPanel.Dock="Right" Text="{Binding ProgressText}" Style="{StaticResource Secondary}" Margin="8,0,0,0" />
@@ -48,7 +48,7 @@
                          Visibility="{Binding IsBusy, Converter={x:Static controls:Converters.BoolToVisibility}}" />
         </StackPanel>
 
-        <Border Grid.Row="4" Background="{StaticResource CardBackground}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" CornerRadius="6">
+        <Border Grid.Row="4" Background="{DynamicResource CardBackground}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" CornerRadius="6">
             <TextBox Text="{Binding ReportText, Mode=OneWay}" IsReadOnly="True" BorderThickness="0" Background="Transparent"
                      FontFamily="Cascadia Mono, Consolas" FontSize="12" Padding="12" TextWrapping="NoWrap"
                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
