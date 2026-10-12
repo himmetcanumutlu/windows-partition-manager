@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 using System.Globalization;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using WindowsPartitionManager.Platform.Windows;
+=======
+using System.Windows;
+using System.Windows.Media;
+>>>>>>> a89c3121d8289d5274cd7d9470051658b8569669
 
 namespace WindowsPartitionManager.App.Theming;
 
@@ -42,6 +47,7 @@ public static class ThemeManager
     {
         Application.Current!.Resources["UiFontFamily"] = new FontFamily(fontName);
     }
+<<<<<<< HEAD
 
     public static void ApplyLanguage(string languageName)
     {
@@ -90,4 +96,6 @@ public static class ThemeManager
     }
 
     private static bool _frameworkLanguageInitialized;
+=======
+>>>>>>> a89c3121d8289d5274cd7d9470051658b8569669
 }
